@@ -1,0 +1,6 @@
+# dsh-deepsea-theme bundle patch — single insert（样板：packages/bundle/base/cordis.patch.yml 的 insert 块结构）
+# patch insert id 是「插件实例 id」（BootModuleRow.id==包名语义，loader 按包名注册）。
+# 与 ui-theme 的 theme 服务无关：本插件只注入样式，不注册任何 slot/服务。
+- insert:
+    - id: deepsea-theme
+      name: 'dsh-deepsea-theme'

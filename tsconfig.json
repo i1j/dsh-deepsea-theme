@@ -1,0 +1,15 @@
+{
+  "extends": "../deepseek-harness/tsconfig.base.client.json",
+  "compilerOptions": {
+    "composite": false,
+    "incremental": false,
+    "noEmit": true,
+    "target": "esnext",
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "src",
+    "css-modules.d.ts"
+  ]
+}

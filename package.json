@@ -1,0 +1,51 @@
+{
+  "name": "dsh-deepsea-theme",
+  "description": "Deep Sea (深海世界) dark theme & color scheme as a standalone dsh client plugin — extracted from the deepseek-harness fork's DeepSeaTheme block (conversation patch, 2026-08-13)",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i1j/dsh-deepsea-theme.git"
+  },
+  "homepage": "https://github.com/i1j/dsh-deepsea-theme",
+  "bugs": {
+    "url": "https://github.com/i1j/dsh-deepsea-theme/issues"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": []
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tsdown": "^0.4.0",
+    "typescript": "~5.7.2"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts",
+    "cordis.patch.yml"
+  ]
+}

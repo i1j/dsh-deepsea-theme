@@ -1,0 +1,7 @@
+node_modules/
+*.log
+.DS_Store
+*.tsbuildinfo
+
+# lib/ IS committed on purpose: git-installed plugins need the built
+# client bundle (dsh-client-modules reads exports["./client"]).
