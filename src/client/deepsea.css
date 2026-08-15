@@ -22,9 +22,12 @@
  *   L3 正文   LLM answers / user text — brightest bioluminescent soft-white
  *   L4 强调   links / buttons / status — fluorescent accents
  *   L-1 降噪  timestamps / meta — dimmed, skipped by the eye
- * Light mode untouched: every rule below is scoped to
- * body[data-ds-dark-theme] except the markdown color-scheme section, which
- * applies in both modes (ChatGPT-like markdown colors from the same fork).
+ * v0.2.0 (2026-08-15): the plugin now covers BOTH modes — deep-sea dark
+ * (scoped to body[data-ds-dark-theme]) and shallow-sea light (scoped to
+ * body:not([data-ds-dark-theme]), decision 06 / v1.5, appended at the bottom:
+ * sea-foam backgrounds, deep-water ink, shallow-sea turquoise accents).
+ * The markdown color-scheme section applies in both modes (ChatGPT-like
+ * markdown colors from the same fork).
  */
 
 /* ============ L0/L1 背景与边框（深海蓝黑） ============ */
@@ -324,4 +327,167 @@ body[data-ds-dark-theme] .wSkVaW_header:after {
 }
 body[data-ds-dark-theme] .P2QtVG_primary {
   animation: dsh-send-pulse 2.6s ease-in-out infinite;
+}
+/* ======================================================================
+ * 浅海世界（Shallow Sea）亮色段 — 深海主题的亮色半区（决策 06，v1.5）
+ * ======================================================================
+ * 用户裁定（2026-08-15）：浅海是深海的亮色色系，归并进深海主题插件——
+ * 本段与上方深色段在同一个样式表内，选择器 body:not([data-ds-dark-theme])
+ * 与 body[data-ds-dark-theme] 互斥（同特异性），亮色模式默认浅海化。
+ *
+ * 设计逻辑（清澈度编码信息层级，深海亮度逻辑的反演）：
+ *   L0 环境   global bg / sidebar / dock — 海沫灰蓝，退后（v1.4 调低、v1.5 调深）
+ *   L2 阅读区 conversation column — 阳光水面，全站最白 rgb(252,253,255)
+ *   L3 正文   deep-water ink rgb(41,52,70)（~10:1）
+ *   L4 强调   shallow-sea turquoise rgb(8,126,164)（白底加深档，4.64:1 白字）
+ *   L-1 降噪  浪沫灰
+ * 深色段完全不动；浮游生物（plankton）在亮色下自动切深色粒子（见 plankton.ts）。
+ */
+/* ============ L0/L1 背景与边框（海沫灰蓝，v1.5 调深一档） ============ */
+body:not([data-ds-dark-theme]) {
+  --dsw-alias-bg-base: rgb(222, 230, 240);
+  --dsw-alias-bg-layer-1: rgb(230, 236, 245);
+  --dsw-alias-bg-layer-2: rgb(235, 240, 247);
+  --dsw-alias-bg-layer-3: rgb(239, 243, 249);
+  --dsw-alias-bg-overlay: rgb(255, 255, 255);
+  --dsw-alias-bg-module-platform: rgb(230, 236, 245);
+  --dsw-alias-bg-multi-select: rgb(230, 236, 245);
+  --dsw-alias-bg-skeleton: rgba(0, 0, 0, 0.04);
+  --dsw-alias-border-l1: rgba(38, 86, 148, 0.06);
+  --dsw-alias-border-l2-darkmode-thin: rgba(38, 86, 148, 0.08);
+  --dsw-alias-border-l2: rgba(38, 86, 148, 0.12);
+  --dsw-alias-border-l3: rgba(38, 86, 148, 0.16);
+  --dsw-alias-border-l4: rgba(38, 86, 148, 0.22);
+  --dsw-alias-border-inverted: rgba(38, 86, 148, 0.08);
+  --dsw-alias-border-inverted2: rgba(38, 86, 148, 0.1);
+}
+
+/* ============ L4 品牌/按钮/交互（浅海荧光族 · 白底加深档） ============ */
+body:not([data-ds-dark-theme]) {
+  --dsw-alias-brand-primary: rgb(8, 126, 164);
+  --dsw-alias-brand-primary-invert: rgb(255, 255, 255);
+  --dsw-alias-brand-primary-new-colorprimary-new-color: rgb(8, 126, 164);
+  --dsw-alias-brand-text: rgb(41, 52, 70);
+  --dsw-alias-button-contrast-fill: rgb(41, 52, 70);
+  --dsw-alias-button-elevated-fill: rgb(255, 255, 255);
+  --dsw-alias-button-floating-fill: rgb(255, 255, 255);
+  --dsw-alias-button-floating-hover: rgb(230, 236, 245);
+  --dsw-alias-button-ghost-active-border: rgb(8, 126, 164);
+  --dsw-alias-button-ghost-active-fill: rgb(218, 232, 245);
+  --dsw-alias-button-ghost-active-hover: rgb(211, 227, 242);
+  --dsw-alias-button-info-fill: rgb(8, 126, 164);
+  --dsw-alias-button-info-hover: rgb(7, 107, 141);
+  --dsw-alias-button-primary-dimmed: rgb(204, 223, 241);
+  --dsw-alias-button-primary-fill: rgb(8, 126, 164);
+  --dsw-alias-button-primary-hover: rgb(7, 107, 141);
+  --dsw-alias-interactive-bg-active: rgba(8, 126, 164, 0.14);
+  --dsw-alias-interactive-bg-hover: rgba(8, 126, 164, 0.07);
+  --dsw-alias-interactive-bg-hover-accent: rgba(8, 126, 164, 0.16);
+  --dsw-alias-interactive-bg-hover-danger: rgba(190, 44, 44, 0.07);
+  --dsw-alias-interactive-bg-hover-solid: rgb(230, 236, 245);
+}
+
+/* ============ L3/L-1 文字（深海军墨，同一蓝灰族系） ============ */
+body:not([data-ds-dark-theme]) {
+  --dsw-alias-label-caption: rgb(140, 154, 178);
+  --dsw-alias-label-dimmed: rgb(120, 134, 158);
+  --dsw-alias-label-primary: rgb(41, 52, 70);
+  --dsw-alias-label-primary-bluish: rgb(38, 86, 148);
+  --dsw-alias-label-primary-dimmed: rgb(54, 66, 86);
+  --dsw-alias-label-primary-foreground: rgb(255, 255, 255);
+  --dsw-alias-label-primary-inverted: rgb(255, 255, 255);
+  --dsw-alias-label-secondary: rgb(84, 98, 122);
+  --dsw-alias-label-tertiary: rgb(118, 132, 156);
+}
+
+/* ============ Markdown 容器（代码块/行内代码/引用/占位） ============ */
+body:not([data-ds-dark-theme]) {
+  --dsw-alias-markdown-citation: rgb(222, 233, 245);
+  --dsw-alias-markdown-code-block: rgb(232, 237, 246);
+  --dsw-alias-markdown-code-block-banner: rgb(224, 231, 242);
+  --dsw-alias-markdown-code-segment-selected: rgb(255, 255, 255);
+  --dsw-alias-markdown-code-segment-unselected: rgb(224, 231, 242);
+  --dsw-alias-markdown-inline-code: rgb(222, 233, 245);
+  --dsw-alias-markdown-placeholder: rgb(230, 236, 245);
+  --dsw-alias-markdown-tag: rgb(222, 233, 245);
+}
+
+/* ============ 滚动条 / 状态（海绿/沙琥珀/珊瑚红深档） ============ */
+body:not([data-ds-dark-theme]) {
+  --dsw-alias-scrollbar-bg-l1: rgb(197, 207, 220);
+  --dsw-alias-scrollbar-bg-l2: rgb(197, 207, 220);
+  --dsw-alias-scrollbar-hover-l1: rgb(172, 187, 208);
+  --dsw-alias-scrollbar-hover-l2: rgb(172, 187, 208);
+  --dsw-alias-state-business-primary: rgb(8, 126, 164);
+  --dsw-alias-state-business-tertiary: rgb(204, 223, 241);
+  --dsw-alias-state-error-primary: rgb(190, 44, 44);
+  --dsw-alias-state-error-secondary: rgb(200, 56, 56);
+  --dsw-alias-state-success-primary: rgb(14, 128, 90);
+  --dsw-alias-state-success-secondary: rgb(18, 150, 105);
+  --dsw-alias-state-success-tertiary: rgb(226, 244, 236);
+  --dsw-alias-state-warn-label: rgb(178, 116, 18);
+  --dsw-alias-state-warn-primary: rgb(160, 104, 16);
+  --dsw-alias-state-warn-secondary: rgb(178, 116, 18);
+  --dsw-alias-state-warn-tertiary: rgb(250, 238, 215);
+  --dsw-alias-toast-bg: rgb(41, 52, 70);
+  --dsw-alias-tooltip-bg: rgb(41, 52, 70);
+}
+
+/* ============ 组件专属表面（气泡/输入栏/侧栏/菜单） ============ */
+body:not([data-ds-dark-theme]) {
+  --dsw-specific-bubble: rgb(218, 232, 245);
+  --dsw-specific-bubble-highlight: rgb(207, 225, 242);
+  --dsw-specific-input-major: rgb(255, 255, 255);
+  --dsw-specific-login-input: rgb(230, 236, 245);
+  --dsw-specific-menu: rgb(255, 255, 255);
+  --dsw-specific-selector: rgb(255, 255, 255);
+  --dsw-specific-sidebar-fill: rgb(214, 224, 236);
+  --dsw-specific-sidebar-nav-item-active: rgb(208, 220, 235);
+  --dsw-specific-sidebar-nav-item-active-accent: rgb(204, 223, 241);
+  --dsw-specific-sidebar-nav-item-hover: rgb(214, 225, 238);
+  --dsw-specific-tip: rgb(230, 236, 245);
+  --dsw-linear-gradient-think: linear-gradient(180deg,rgb(230, 236, 245) 20.19%,rgba(230, 236, 245, 0) 100%);
+  --dsw-linear-think-select: linear-gradient(180deg,rgb(218, 232, 245) 20.19%,rgba(218, 232, 245, 0) 100%);
+}
+
+/* ============ 代码高亮（shiki 白底可读系） ============ */
+body:not([data-ds-dark-theme]) {
+  --shiki-foreground: rgb(41, 52, 70);
+  --shiki-background: var(--dsw-alias-markdown-code-block);
+  --shiki-token-constant: rgb(28, 126, 214);
+  --shiki-token-string: rgb(47, 158, 68);
+  --shiki-token-comment: rgb(134, 142, 150);
+  --shiki-token-keyword: rgb(214, 51, 108);
+  --shiki-token-parameter: rgb(232, 89, 12);
+  --shiki-token-function: rgb(103, 65, 217);
+  --shiki-token-string-expression: rgb(43, 138, 62);
+  --shiki-token-punctuation: rgb(73, 80, 87);
+  --shiki-token-link: rgb(25, 113, 194);
+}
+
+/* ============ 侧栏文字降噪（亮色：左侧工作区文字退后） ============ */
+body:not([data-ds-dark-theme]) .hHd-Xa_root {
+  --dsw-alias-label-primary: rgb(70, 84, 106);
+}
+
+/* ============ L2 阅读区：对话栏 = 阳光水面（全站最白，与海沫灰蓝背景对比） ============ */
+body:not([data-ds-dark-theme]) .wSkVaW_root {
+  background: rgb(252, 253, 255);
+}
+
+/* ============ L3/L4 正文与标题（亮色覆写，对比度层级与深色一一对应） ============ */
+body:not([data-ds-dark-theme]) .Sxvs8a_body {
+  color: rgb(41, 52, 70);
+}
+body:not([data-ds-dark-theme]) .Sxvs8a_body :where(h1, h2, h3, h4, h5) {
+  color: rgb(52, 94, 160);
+}
+body:not([data-ds-dark-theme]) .Sxvs8a_body :not(pre) > code {
+  color: rgb(0, 110, 144);
+}
+body:not([data-ds-dark-theme]) .Sxvs8a_body strong {
+  color: rgb(26, 78, 148);
+}
+body:not([data-ds-dark-theme]) .Sxvs8a_body h6 {
+  color: rgb(120, 134, 158);
 }

@@ -85,28 +85,31 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, style: string, text?:
 }
 
 export function createParamsPanel(env: ParamsPanelEnv): ParamsPanelHandle {
-  // Brighter, plankton-toned palette: lifted cyan-tinted navy background and
-  // fluorescent-cyan accents (matches the floating particles' colour family).
+  // Neutral blue-grey palette (mid-lightness, slight blue tint) that reads
+  // on BOTH sea surfaces — deep-sea dark and shallow-sea light — instead of a
+  // dark-only cyan-tinted navy. Translucent + backdrop blur so it sits softly
+  // over either background (user request, 2026-08-15).
   const panel = el('div',
     'position:fixed;left:8px;bottom:8px;width:268px;z-index:10000;box-sizing:border-box;' +
-    'background:rgb(28,40,60);border:1px solid rgba(94,192,226,.35);border-radius:10px;' +
-    'padding:10px 12px 12px;color:rgb(198,214,234);font-size:12px;line-height:1.5;' +
-    'box-shadow:0 10px 28px rgba(0,0,0,.5);display:none;' +
+    'background:rgba(118,133,155,.92);border:1px solid rgba(64,84,110,.5);border-radius:10px;' +
+    'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);' +
+    'padding:10px 12px 12px;color:rgb(36,48,66);font-size:12px;line-height:1.5;' +
+    'box-shadow:0 10px 28px rgba(20,30,45,.35);display:none;' +
     'max-height:calc(100vh - 24px);overflow-y:auto;')
   document.body.appendChild(panel)
 
   // header
   const header = el('div', 'display:flex;align-items:center;gap:8px;margin-bottom:8px;')
-  header.appendChild(el('span', 'flex:1;font-weight:600;font-size:12px;letter-spacing:.03em;color:rgb(228,240,250)', '浮游生物参数'))
+  header.appendChild(el('span', 'flex:1;font-weight:600;font-size:12px;letter-spacing:.03em;color:rgb(28,40,58)', '浮游生物参数'))
   const closeBtn = el('button',
-    'border:0;background:none;cursor:pointer;color:rgb(170,196,222);font-size:14px;padding:2px 4px;', '✕')
+    'border:0;background:none;cursor:pointer;color:rgb(58,72,94);font-size:14px;padding:2px 4px;', '✕')
   closeBtn.addEventListener('click', hide)
   header.appendChild(closeBtn)
   panel.appendChild(header)
 
   // enable toggle row
-  const toggleRow = el('div', 'display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(94,192,226,.22);')
-  const toggle = el('input', 'accent-color:rgb(63,200,232);cursor:pointer;')
+  const toggleRow = el('div', 'display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(64,84,110,.35);')
+  const toggle = el('input', 'accent-color:rgb(28,70,128);cursor:pointer;')
   toggle.type = 'checkbox'
   toggleRow.appendChild(toggle)
   toggleRow.appendChild(el('span', 'flex:1;', '启用背景'))
@@ -117,18 +120,18 @@ export function createParamsPanel(env: ParamsPanelEnv): ParamsPanelHandle {
   for (const spec of SPECS) {
     if (isDivider(spec)) {
       panel.appendChild(el('div',
-        'margin:6px 0 7px;padding-top:7px;border-top:1px solid rgba(94,192,226,.24);' +
-        'color:rgb(130,214,242);font-size:11px;letter-spacing:.05em;', spec.divider))
+        'margin:6px 0 7px;padding-top:7px;border-top:1px solid rgba(64,84,110,.35);' +
+        'color:rgb(52,74,104);font-size:11px;letter-spacing:.05em;', spec.divider))
       continue
     }
     const row = el('div', 'display:flex;align-items:center;gap:8px;margin-bottom:7px;')
-    row.appendChild(el('label', 'flex:none;width:56px;color:rgb(176,200,226);font-size:11px;', spec.label))
-    const input = el('input', 'flex:1;min-width:0;accent-color:rgb(63,200,232);cursor:pointer;height:14px;')
+    row.appendChild(el('label', 'flex:none;width:56px;color:rgb(44,58,78);font-size:11px;', spec.label))
+    const input = el('input', 'flex:1;min-width:0;accent-color:rgb(28,70,128);cursor:pointer;height:14px;')
     input.type = 'range'
     input.min = String(spec.min)
     input.max = String(spec.max)
     input.step = String(spec.step)
-    const value = el('span', 'flex:none;width:58px;text-align:right;color:rgb(176,200,226);font-size:11px;font-variant-numeric:tabular-nums;')
+    const value = el('span', 'flex:none;width:58px;text-align:right;color:rgb(44,58,78);font-size:11px;font-variant-numeric:tabular-nums;')
     row.appendChild(input)
     row.appendChild(value)
     panel.appendChild(row)
@@ -137,8 +140,8 @@ export function createParamsPanel(env: ParamsPanelEnv): ParamsPanelHandle {
 
   // reset row
   const resetBtn = el('button',
-    'width:100%;margin-top:4px;padding:5px 0;border:1px solid rgba(94,192,226,.4);border-radius:6px;' +
-    'background:rgba(63,200,232,.16);color:rgb(140,220,246);font-size:11px;cursor:pointer;', '恢复默认')
+    'width:100%;margin-top:4px;padding:5px 0;border:1px solid rgba(28,70,128,.55);border-radius:6px;' +
+    'background:rgba(28,70,128,.18);color:rgb(24,56,100);font-size:11px;cursor:pointer;', '恢复默认')
   resetBtn.addEventListener('click', () => { env.reset(); refresh() })
   panel.appendChild(resetBtn)
 

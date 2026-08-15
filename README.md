@@ -1,11 +1,14 @@
 # dsh-deepsea-theme
 
-Deep Sea (深海世界) 深色主题与配色 —— 从 deepseek-harness fork 的
+Deep Sea (深海世界) 双模式主题与配色 —— 从 deepseek-harness fork 的
 `conversation` 补丁（2026-08-13）中独立出来的纯客户端 CSS 插件。
 
 > 迁移自 fork 的 **DeepSeaTheme** 覆盖层（约 95 个 token 声明）+ 配套的
 > 组件级深色规则（对话栏 L2 背景、markdown 正文 L3/L4 颜色、侧栏降噪）+ fork 的
 > markdown 配色（ChatGPT 风，双模式生效）。
+> **v0.2.0（2026-08-15）**：归并浅海世界亮色色系（决策 06 / v1.5）——同一样式表内
+> 深色段（`body[data-ds-dark-theme]`，深海）+ 亮色段（`body:not([data-ds-dark-theme])`，浅海），
+> 一个插件覆盖双模式。
 
 ## 设计逻辑
 
@@ -20,12 +23,16 @@ Deep Sea (深海世界) 深色主题与配色 —— 从 deepseek-harness fork �
 | L4 强调 | 链接 / 按钮 / 状态 / 行内代码 | 荧光色系局部点亮 |
 | L-1 降噪 | 时间戳 / 元信息 | 暗灰，视线自动跳过 |
 
-深色模式专用；亮色模式不动（除末尾"markdown 配色"段双模式生效）。
+深色模式（深海）：亮度编码——越重要越亮，环境沉入深海蓝黑。
+亮色模式（浅海，v0.2.0）：清澈度编码（深海亮度逻辑的反演）——越重要越"清"，
+对话栏=阳光水面全站最白，环境海沫灰蓝退后，正文深海军墨，强调色为深海荧光族的
+白底加深档（浅海青 `rgb(8,126,164)`）；背景经 v1.4 调低、v1.5 调深两轮微调。
 
 ## 机制
 
 - 所有组件都读取 `--dsw-alias-*` / `--dsw-specific-*` / `--shiki-*` token，
-  因此在 `body[data-ds-dark-theme]` 下重定义 token = 一处生效全站。
+  因此分别在 `body[data-ds-dark-theme]`（深色段）与 `body:not([data-ds-dark-theme])`
+  （亮色段）下重定义 token = 一处生效全站；两段选择器互斥、同特异性。
 - 插件样式在 bundle 求值时注入 `document.head`（幂等
   `style[data-plugin-css="dsh-deepsea-theme/DeepSeaTheme.css"]` 守卫），
   晚于 dist token 样式表加载，同特异性下后写覆盖先写。
@@ -67,6 +74,12 @@ dsh plugin --profile web add git+https://gitee.com/elite1j/dsh-deepsea-theme.git
 > 仓库已打上 GitHub `dsh-plugin` 主题标签，可被社区插件搜索
 > （`find_dsh_plugin` / dsh-recommend 榜单）发现。
 
+## 版本
+
+- **v0.2.0（2026-08-15）**：浅海世界亮色色系归并（决策 06 / v1.5），双模式；
+  plankton 亮色适配。
+- **v0.1.0（2026-08-14）**：深海世界深色主题 + 浮游生物背景 + 水母参数入口。
+
 ## 构建
 
 ```bash
@@ -78,7 +91,7 @@ npx tsc -p tsconfig.build.json   # lib/types/*.d.ts
 
 ## 文件
 
-- `src/client/deepsea.css` —— 主题样式唯一事实源（分段注释，可裁剪）
+- `src/client/deepsea.css` —— 主题样式唯一事实源（分段注释，可裁剪；深色段 + 浅海段）
 - `src/client/index.ts` —— client 入口（样式注入 + 浮游生物挂载 + 水母按钮）
 - `src/client/plankton.ts` —— 浮游生物动画（画布粒子 + 深潜辉光）
 - `src/client/params-panel.ts` —— 参数面板（青色亮调）
@@ -91,13 +104,17 @@ npx tsc -p tsconfig.build.json   # lib/types/*.d.ts
 - 只迁移**主题与颜色**部分；fork 补丁里的布局改动（宽对话栏 1360px、用户气泡
   对齐、隐藏 tool-call 节点、隐藏 reasoning、wide.dock 双栏）不在本插件内
   （wide.dock 已由 dsh-wide-dock 插件承接）。
-- 深色 token 层为深色模式专用；markdown 配色段（行内代码跟随 shiki keyword、
-  引用蓝条、h6 灰、表头底色）双模式生效——若只要纯深色主题，注释该段即可。
+- 深色 token 层为深色模式专用；亮色 token 层（浅海段）为亮色模式专用——
+  亮色模式默认浅海化（取舍见决策 06 §6：若日后要"原版亮色"需另加开关层）；
+  若只要纯深色主题，注释文件末尾的浅海段即可。
+- markdown 配色段（行内代码跟随 shiki keyword、引用蓝条、h6 灰、表头底色）双模式生效。
 ## 浮游生物背景（对话栏）
 
 对话栏（L2 阅读区）带一层极轻量的深海浮游生物动画（canvas 预渲染发光 sprite，
 无依赖；洋流驱动：所有粒子同向漂移、流向/流速周期性变化、个体仅微小游动扰动）。
 `prefers-reduced-motion` 时只渲染静态帧。
+
+> 亮色（浅海）下粒子仍为深海荧光色板，不做主题切换（用户裁定，2026-08-15）。
 
 ### 参数（默认值）
 
