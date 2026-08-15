@@ -123,15 +123,34 @@ function isDeepDiving(): boolean {
 /**
  * Move the "Session log" header button into the sidebar settings area so it
  * sits next to 设置 (user request). Runs on every DOM mutation; harmless when
- * the button is absent. Kept in place after session switches (button is
- * re-rendered in the header by React, then moved again).
+ * the button is absent.
+ *
+ * The header slot re-renders and React can create a SECOND button in the chat
+ * header while the already-moved copy stays in the settings area (the move is
+ * an external DOM mutation React never reconciles; on a later remount it
+ * inserts a fresh node and leaves the orphaned copy behind). A plain
+ * querySelector would then always find the settled copy first and skip the
+ * stray, so the live header button stays on the right — the observed bug.
+ *
+ * Instead, reconcile ALL copies on every pass: keep the newest one (the last
+ * in document order — the conversation header sits after the sidebar, so a
+ * freshly re-rendered header copy wins over the settled stale one), discard
+ * the rest, and settle the survivor into the settings area. The survivor is
+ * always the live React copy: in-place re-renders update the settled node (no
+ * duplicate), remounts create a new node in the header which document order
+ * picks over the orphaned copy.
  */
 function rearrangeSidebar(): void {
   const settingsArea = document.querySelector('.hHd-Xa_settingsArea')
-  const logBtn = document.querySelector('.nL4_yW_sessionLogButton')
-  if (settingsArea === null || logBtn === null) return
-  if (logBtn.parentElement === settingsArea) return
-  settingsArea.appendChild(logBtn)
+  if (settingsArea === null) return
+  const buttons = Array.from(document.querySelectorAll('.nL4_yW_sessionLogButton'))
+  if (buttons.length === 0) return
+  // keep the newest copy (last in document order); drop stale duplicates
+  const keep = buttons[buttons.length - 1] as HTMLElement
+  for (const btn of buttons) {
+    if (btn !== keep) btn.remove()
+  }
+  if (keep.parentElement !== settingsArea) settingsArea.appendChild(keep)
 }
 
 /** Mount the plankton overlay on the conversation column when it appears. */

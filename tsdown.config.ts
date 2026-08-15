@@ -1,10 +1,10 @@
-// Self-contained build config（样板：dsh-wide-dock）：插件在 fork 仓库之外，
-// 不能 import fork 的 tsdown preset，故镜像其 closure-factory 行为；与 wide-dock
-// 不同的是本插件无组件 CSS-modules，只有一张全局深色主题样式表，因此用 raw-css
-// 虚拟插件把 deepsea.css 内联为字符串并自注入（不需要 lightningcss transform）。
+// Self-contained build config（样板：dsh-wide-dock）：插件不依赖仓库外 preset，
+// 故镜像其 closure-factory 行为；与 wide-dock 不同的是本插件无组件 CSS-modules，
+// 只有一张全局深色主题样式表，因此用 raw-css 虚拟插件把 deepsea.css 内联为字符串
+// 并自注入（不需要 lightningcss transform）。
 //
-// ⚠️ 双源漂移风险：banner/footer/intro 与 css 虚拟插件为 fork
-// packages/client/tsdown.client.ts 的镜像复刻——fork 侧变更时须同步。
+// ⚠️ 双源漂移风险：banner/footer/intro 与 css 虚拟插件为
+// packages/client/tsdown.client.ts 模式的镜像复刻——上游变更时须同步。
 import { readFile } from 'node:fs/promises'
 import { dirname, resolve as resolvePath } from 'node:path'
 import type { UserConfig } from 'tsdown'
@@ -13,14 +13,14 @@ import type { UserConfig } from 'tsdown'
 const EXTERNALS: string[] = []
 
 /** Virtual-id wrapper：把 .css 文件作为字符串模块提供（tsdown 自身 css 管线按
- * .css 后缀接管，故用 .mjs 虚拟后缀，镜像 fork tsdown.client.ts）。 */
+ * .css 后缀接管，故用 .mjs 虚拟后缀，镜像 tsdown.client.ts 模式）。 */
 const CSS_VIRTUAL_PREFIX = '\0dsh-css:'
 const CSS_VIRTUAL_SUFFIX = '.mjs'
 
 export default [
   // host 半：src/index.ts → lib/index.js（esm, node）
   {
-    name: 'dsh-deepsea-theme',
+    name: 'dsh-krill-theme',
     entry: ['src/index.ts'],
     outDir: 'lib',
     format: ['esm'],
@@ -31,7 +31,7 @@ export default [
   },
   // client 半：src/client/index.ts → lib/client.js（cjs, browser, closure-factory）
   {
-    name: 'dsh-deepsea-theme/client',
+    name: 'dsh-krill-theme/client',
     entry: { client: 'src/client/index.ts' },
     outDir: 'lib',
     format: 'cjs',
@@ -48,7 +48,7 @@ export default [
     },
     outputOptions: {
       entryFileNames: 'client.js',
-      banner: 'window.__ModuleLoader__.load({ id: "dsh-deepsea-theme", factory: (require) => {',
+      banner: 'window.__ModuleLoader__.load({ id: "dsh-krill-theme", factory: (require) => {',
       footer: 'return module.exports; } });',
       intro: 'var module = { exports: {} }; var exports = module.exports;',
     },
@@ -68,10 +68,10 @@ export default [
         const css = (await readFile(fileId)).toString()
         return [
           'const css = ' + JSON.stringify(css) + ';',
-          'const tagId = ' + JSON.stringify('dsh-deepsea-theme/DeepSeaTheme.css') + ';',
+          'const tagId = ' + JSON.stringify('dsh-krill-theme/DeepSeaTheme.css') + ';',
           "if (typeof document !== 'undefined' && document.querySelector('style[data-plugin-css=' + JSON.stringify(tagId) + ']') === null) {",
           "  const tag = document.createElement('style');",
-          "  tag.dataset.plugin = " + JSON.stringify('dsh-deepsea-theme') + ';',
+          "  tag.dataset.plugin = " + JSON.stringify('dsh-krill-theme') + ';',
           '  tag.dataset.pluginCss = tagId;',
           '  tag.textContent = css;',
           '  document.head.appendChild(tag);',

@@ -1,14 +1,14 @@
 {
-  "name": "dsh-deepsea-theme",
+  "name": "dsh-krill-theme",
   "description": "Deep Sea (深海世界) + Shallow Sea (浅海世界) 双模式主题插件 —— 一个插件覆盖 DSH 深/亮两套外观：深海深色（亮度编码信息层级）+ 浅海亮色（清澈度编码），含浮游生物动画背景、深潜工作态增强、水母参数入口。",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/i1j/dsh-deepsea-theme.git"
+    "url": "git+https://github.com/i1j/dsh-krill-theme.git"
   },
-  "homepage": "https://github.com/i1j/dsh-deepsea-theme",
+  "homepage": "https://github.com/i1j/dsh-krill-theme",
   "bugs": {
-    "url": "https://github.com/i1j/dsh-deepsea-theme/issues"
+    "url": "https://github.com/i1j/dsh-krill-theme/issues"
   },
   "type": "module",
   "main": "lib/index.js",

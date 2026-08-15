@@ -1,7 +1,8 @@
-# dsh-deepsea-theme
+# dsh-krill-theme
 
-> **v1.0.0** · Deep Sea（深海世界）· 双模式主题插件
+> **v1.0.0** · 蓝鲸的餐桌（Krill）· 深海世界 + 浅海世界 双模式主题插件
 
+磷虾（krill）是蓝鲸的餐桌，也是这个插件的名字——深海世界暗色 + 浅海世界亮色，
 一个插件覆盖 DSH Web 的**深 / 亮两套外观**：深色模式 = 深海世界，亮色模式 = 浅海世界。
 纯客户端 CSS 插件，零依赖、零侵入——不改 dist、不碰组件逻辑，一处生效全站。
 
@@ -11,15 +12,15 @@
 
 | 深海 · 深色模式 | 浅海 · 亮色模式 |
 |---|---|
-| ![深海 · 深色模式](assets/theme-dark.png) | ![浅海 · 亮色模式](assets/theme-light.png) |
+| ![深海 · 深色模式](assets/theme-dark-1.0.png) | ![浅海 · 亮色模式](assets/theme-light-1.0.png) |
 
 *深色 = 深海世界（对话栏 `rgb(28,35,49)`，正文生物荧光软白）；亮色 = 浅海世界（对话栏「阳光水面」全站最白，环境海沫灰蓝退后）。*
 
 对话栏的浮游生物动画背景（APNG 真彩，实拍 30 帧，无限循环）：
 
-![浮游生物动画演示](assets/plankton.apng)
+![浮游生物动画演示](assets/plankton-1.0.apng)
 
-> GIF 兜底（256 色）：[assets/plankton.gif](assets/plankton.gif)
+> GIF 兜底（256 色）：[assets/plankton-1.0.gif](assets/plankton-1.0.gif)
 
 ---
 
@@ -62,12 +63,12 @@
 
 ```bash
 # 在 profile 目录（如 ~/.dsh/profiles/web）执行：
-dsh plugin --profile web add git+https://github.com/i1j/dsh-deepsea-theme.git
+dsh plugin --profile web add git+https://github.com/i1j/dsh-krill-theme.git
 # Gitee 镜像（国内更快）：
-dsh plugin --profile web add git+https://gitee.com/elite1j/dsh-deepsea-theme.git
+dsh plugin --profile web add git+https://gitee.com/elite1j/dsh-krill-theme.git
 ```
 
-然后把 `dsh-deepsea-theme` 加入 profile 的 `dsh.profile.bundles`，重启 `dsh web`。
+然后把 `dsh-krill-theme` 加入 profile 的 `dsh.profile.bundles`，重启 `dsh web`。
 
 ### profile 手动方式
 
@@ -75,11 +76,11 @@ dsh plugin --profile web add git+https://gitee.com/elite1j/dsh-deepsea-theme.git
 // <profile>/package.json
 {
   "dependencies": {
-    "dsh-deepsea-theme": "link:/path/to/dsh-deepsea-theme"
+    "dsh-krill-theme": "link:/path/to/dsh-krill-theme"
   },
   "dsh": {
     "profile": {
-      "bundles": [ /* ...已有 bundle... */, "dsh-deepsea-theme" ]
+      "bundles": [ /* ...已有 bundle... */, "dsh-krill-theme" ]
     }
   }
 }
@@ -206,7 +207,7 @@ npx tsc -p tsconfig.build.json   # lib/types/*.d.ts
 
 ## 机制
 
-- 插件样式在 bundle 求值时注入 `document.head`（幂等 `style[data-plugin-css="dsh-deepsea-theme/DeepSeaTheme.css"]` 守卫），晚于 dist token 样式表加载，同特异性下后写覆盖先写。
+- 插件样式在 bundle 求值时注入 `document.head`（幂等 `style[data-plugin-css="dsh-krill-theme/DeepSeaTheme.css"]` 守卫），晚于 dist token 样式表加载，同特异性下后写覆盖先写。
 - 升级换代的复查面：仅 token 键名 + 3 个组件哈希类名（`wSkVaW_root` / `Sxvs8a_body` / `hHd-Xa_root`，来自 `@deepseek-ai/dsh-client-ui-conversation` dist）。
 
 ---
