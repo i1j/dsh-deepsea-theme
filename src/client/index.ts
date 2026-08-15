@@ -262,8 +262,17 @@ export function apply(_ctx: unknown): void {
     const show = hasRoot ? 'flex' : 'none'
     jellyBtn.style.display = show
     if (!hasRoot) panel.hide()
-    if (hasRoot && enabled) mount()
-    else unmount()
+    if (hasRoot && enabled) {
+      // The conversation root can be replaced atomically by React (theme /
+      // session switch): our canvas then lives in a detached subtree while the
+      // dispose-guard below would block mounting onto the fresh root — the
+      // plankton silently disappears until the toggle unmounts+remounts it.
+      // Detect the detach and force a remount onto the current root.
+      if (plankton !== null && !plankton.element.isConnected) unmount()
+      mount()
+    } else {
+      unmount()
+    }
     if (hasRoot) positionJelly()
   }
 

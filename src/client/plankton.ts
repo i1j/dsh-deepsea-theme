@@ -96,6 +96,8 @@ export type PlanktonMode = 'drift' | 'dive'
 
 /** Handle returned by mountPlankton. */
 export interface PlanktonHandle {
+  /** The overlay canvas element (to detect detachment from the live DOM). */
+  element: HTMLCanvasElement
   dispose(): void
   setMode(mode: PlanktonMode): void
 }
@@ -125,7 +127,7 @@ export function mountPlankton(root: HTMLElement, options: PlanktonOptions = {}):
   root.insertBefore(canvas, root.firstChild)
 
   const ctx = canvas.getContext('2d')
-  if (ctx === null) return { dispose: () => { canvas.remove() }, setMode: () => {} }
+  if (ctx === null) return { element: canvas, dispose: () => { canvas.remove() }, setMode: () => {} }
 
   let w = 0
   let h = 0
@@ -298,6 +300,7 @@ export function mountPlankton(root: HTMLElement, options: PlanktonOptions = {}):
   }
 
   return {
+    element: canvas,
     dispose: () => {
       if (raf !== 0) cancelAnimationFrame(raf)
       ro?.disconnect()
