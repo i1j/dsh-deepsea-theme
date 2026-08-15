@@ -1,9 +1,9 @@
 /*
- * Deep Sea (深海世界) dark theme & color scheme.
- * Extracted byte-for-byte from the deepseek-harness fork's conversation patch
- * (2026-08-13) — the "DeepSeaTheme" token-override block plus the dark-mode
- * component rules that complete the look (L2 conversation column, L3/L4
- * markdown text) and the markdown color scheme (行内代码/引用/h6/表头).
+ * Deep Sea (深海世界) dual-mode theme for DeepSeek Harness (DSH).
+ * Deep-sea dark (body[data-ds-dark-theme]) + shallow-sea light
+ * (body:not([data-ds-dark-theme])) in ONE stylesheet — a complete look:
+ * token-override layer, L2 conversation column, L3/L4 markdown text,
+ * and the markdown color scheme (行内代码/引用/h6/表头).
  *
  * Mechanism: every dsh component reads --dsw-alias-* / --dsw-static-* /
  * --shiki-* tokens, so redefining them under body[data-ds-dark-theme] in ONE
@@ -24,10 +24,10 @@
  *   L-1 降噪  timestamps / meta — dimmed, skipped by the eye
  * v0.2.0 (2026-08-15): the plugin now covers BOTH modes — deep-sea dark
  * (scoped to body[data-ds-dark-theme]) and shallow-sea light (scoped to
- * body:not([data-ds-dark-theme]), decision 06 / v1.5, appended at the bottom:
+ * body:not([data-ds-dark-theme]), v1.5, appended at the bottom:
  * sea-foam backgrounds, deep-water ink, shallow-sea turquoise accents).
  * The markdown color-scheme section applies in both modes (ChatGPT-like
- * markdown colors from the same fork).
+ * markdown colors).
  */
 
 /* ============ L0/L1 背景与边框（深海蓝黑） ============ */
@@ -180,7 +180,7 @@ body[data-ds-dark-theme] .Sxvs8a_body h6 {
   color: rgb(104, 118, 148);
 }
 
-/* ============ Markdown 配色（fork 的 ChatGPT 风，双模式生效；去深色化可注释本段） ============ */
+/* ============ Markdown 配色（ChatGPT 风，双模式生效；去深色化可注释本段） ============ */
 .Sxvs8a_body :not(pre) > code {
   color: var(--shiki-token-keyword);
 }
@@ -329,7 +329,7 @@ body[data-ds-dark-theme] .P2QtVG_primary {
   animation: dsh-send-pulse 2.6s ease-in-out infinite;
 }
 /* ======================================================================
- * 浅海世界（Shallow Sea）亮色段 — 深海主题的亮色半区（决策 06，v1.5）
+ * 浅海世界（Shallow Sea）亮色段 — 深海主题的亮色半区（v1.5）
  * ======================================================================
  * 用户裁定（2026-08-15）：浅海是深海的亮色色系，归并进深海主题插件——
  * 本段与上方深色段在同一个样式表内，选择器 body:not([data-ds-dark-theme])
