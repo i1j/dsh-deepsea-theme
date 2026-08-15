@@ -194,14 +194,14 @@ body[data-ds-dark-theme] .Sxvs8a_body h6 {
 .Sxvs8a_body th {
   background: var(--dsw-alias-markdown-inline-code);
 }
-/* ============ dsh-sidechain 适配（外部插件变量映射，仅深色作用域） ============ */
+/* ============ dsh-sidechain 适配（外部插件变量映射，深色 + 浅海双作用域） ============ */
 /* dsh-sidechain 的面板（SidechainPanel）使用私有 --ds-color-* 变量 + 硬编码
  * fallback（白底 #ffffff / 浅灰 #f2f3f5），未接入 --dsw-alias-* token，故深海
  * token 层覆盖不到。sidechain 的每个颜色都经 var(--ds-color-*, fallback) 引用
  * （源码注释：falls back gracefully when the app lacks the variables），因此
- * 只需定义这几个变量即可整面板跟随深海主题——零类名耦合，sidechain 升级不破。
- * 亮色模式不定义 → fallback 保持原样。若 sidechain 上游自行定义变量（根因修复），
- * 本段可安全删除。
+ * 只需定义这几个变量即可整面板跟随主题——零类名耦合，sidechain 升级不破。
+ * 深色段（下方）沉入深海最暗处；浅海段（同节末尾）比侧栏再深一档，
+ * 文字深海军墨。若 sidechain 上游自行定义变量（根因修复），本段可安全删除。
  */
 body[data-ds-dark-theme] {
   /* 侧链是旁路次级面板：比侧栏 rgb(9,13,21) 更沉（L-2 退后层），视觉上
@@ -216,6 +216,20 @@ body[data-ds-dark-theme] {
   --ds-color-border-1: rgba(148, 178, 255, 0.12);
   --ds-color-primary: rgb(63, 200, 232);
   --ds-color-danger: rgb(224, 85, 85);
+}
+/* 浅海亮色段：侧链是旁路次级面板——比侧栏 rgb(214,224,236) 再深一档的海沫灰蓝
+ * （L-2 退后层，与深色语义一致），文字深海军墨；主色/边框取浅海青系。 */
+body:not([data-ds-dark-theme]) {
+  --ds-color-bg-1: rgb(202, 214, 230);
+  --ds-color-bg-2: rgb(196, 209, 227);
+  --ds-color-surface-2: rgb(190, 204, 223);
+  --ds-color-text-1: rgb(41, 52, 70);
+  --ds-color-text-2: rgb(84, 98, 122);
+  --ds-color-text-3: rgb(118, 132, 156);
+  --ds-color-hover: rgba(8, 126, 164, 0.08);
+  --ds-color-border-1: rgba(38, 86, 148, 0.14);
+  --ds-color-primary: rgb(8, 126, 164);
+  --ds-color-danger: rgb(190, 44, 44);
 }
 /* ============ 侧栏底部操作区重排（session log ↔ 设置 并排） ============ */
 /* 用户要求：把对话栏 header 的 "Session log" 按钮移到侧栏底部与"设置"并列，
