@@ -1,7 +1,7 @@
 {
   "name": "dsh-deepsea-theme",
   "description": "Deep Sea (深海世界) dark theme & color scheme as a standalone dsh client plugin — extracted from the deepseek-harness fork's DeepSeaTheme block (conversation patch, 2026-08-13)",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/i1j/dsh-deepsea-theme.git"

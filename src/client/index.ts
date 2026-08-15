@@ -72,9 +72,9 @@ function readPlanktonConfig(): Required<PlanktonOptions> {
   return { ...DEFAULT_PLANKTON, ...fromCss, ...fromWindow }
 }
 
-/** Jellyfish button diameter (px) — shrunk to 2/3 of the original 60px.
+/** Jellyfish button diameter (px) — 60 → 40 → 27 (v0.2.1, ~2/3 of v0.2.0's 40px).
  * Keep in sync with positionJelly()'s math and the icon size in icons.ts. */
-const BTN_SIZE = 40
+const BTN_SIZE = 27
 
 /** The jellyfish button icon — custom clean slender design (narrow tall bell
  * + 4 parallel long tentacles; no crown spots, no crossing tentacle).
@@ -92,7 +92,7 @@ function currentIconSvg(): string {
  * pane). positionJelly() in apply() tracks the anchor's rect on every
  * mutation/resize. Click opens the params panel. No ring border; float + glow
  * animations come from deepsea.css ([data-dsh-jelly]), active only while the
- * background is enabled (.on). Size = BTN_SIZE (2x the original 30px);
+ * background is enabled (.on). Size = BTN_SIZE (27px, ~2/3 of v0.2.0's 40px);
  * centring is done via top = anchor centre - BTN_SIZE/2 so the CSS float
  * animation (transform) never fights it. */
 function createJellyfishButton(title: string): HTMLButtonElement {
