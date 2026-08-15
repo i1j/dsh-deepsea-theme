@@ -30,7 +30,9 @@
 - **实时调参**（无需重启）：水母按钮参数面板 / `window.__DSH_DEEPSEA__.setPlankton()` / CSS 变量三种方式，见下文。
 - `prefers-reduced-motion` 时自动退化为静态帧（无障碍友好）。
 
-![浮游生物动画演示（实拍，640×497，循环播放）](assets/plankton.gif)
+![浮游生物动画演示（APNG 真彩，实拍 30 帧，无限循环）](assets/plankton.apng)
+
+> GIF 兜底（256 色）：[assets/plankton.gif](assets/plankton.gif)
 
 ### 4. 深潜（"Deep diving…"）工作态增强
 - 生成期间浮游生物进入**深潜**模式：全体粒子 ~40× 流速近乎竖直上冲 + 周期性涌浪（≈3.1s 呼吸节奏）；
@@ -170,7 +172,8 @@ dsh plugin --profile web add git+https://gitee.com/elite1j/dsh-deepsea-theme.git
 ## 版本
 
 - **v1.0.0（2026-08-15）**：1.0 定版——整合深海（深色）+ 浅海（亮色）双模式为单一插件；
-  水母按钮 / 图标 / 参数面板定稿；README 新增实拍配图（深浅双模式截图 + 浮游生物动画 GIF）；
+  水母按钮 / 图标 / 参数面板定稿；README 新增实拍配图（深浅双模式截图 + 浮游生物动画——
+  APNG 真彩 30 帧无限循环，GIF 256 色兜底）；
   发布 GitHub + Gitee 双镜像仓库。
 - **v0.2.2（2026-08-15）**：水母伞帽调大约 1/5（bell ×1.2，锚定伞檐、触角不动）。
 - **v0.2.1（2026-08-15）**：水母按钮缩小到约 2/3（40px → 27px，图标 27×44 → 18×29）。
@@ -198,7 +201,7 @@ npx tsc -p tsconfig.build.json   # lib/types/*.d.ts
 - `src/client/icons.ts` —— 水母按钮图标（定稿：净修长款）
 - `src/index.ts` —— host 入口（空）
 - `tsdown.config.ts` —— raw-css 虚拟插件：`.css` 内联为字符串并自注入
-- `assets/` —— README 配图与动画（深浅双模式截图 + 浮游生物 GIF）
+- `assets/` —— README 配图与动画（深浅双模式截图 + 浮游生物动画 APNG / GIF）
 
 ## 范围说明
 
